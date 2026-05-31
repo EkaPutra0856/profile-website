@@ -76,7 +76,7 @@ const PROJECT_DATA: ProjectDataMap = {
       },
       { 
         type: 'video', 
-        url: '/images/game/Video Game.mp4' 
+        url: '/images/game/GameVidConv.mp4' 
       },
     ]
   },
