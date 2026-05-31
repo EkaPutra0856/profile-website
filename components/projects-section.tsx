@@ -1,7 +1,7 @@
 'use client';
 
 import { FolderOpen, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Utility function to convert Google Drive view links to direct access
 const convertDriveLink = (url: string, type: 'image' | 'video'): string => {
@@ -11,13 +11,14 @@ const convertDriveLink = (url: string, type: 'image' | 'video'): string => {
   const fileIdMatch = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
   
   if (!fileIdMatch || !fileIdMatch[1]) {
-    return url; // Fallback to original URL if pattern doesn't match
+    return url; 
   }
   
   const fileId = fileIdMatch[1];
   
   if (type === 'image') {
-    return `https://drive.google.com/uc?export=view&id=${fileId}`;
+    // TRIK RAHASIA: Menggunakan server lh3 Google User Content yang bebas blokir CORS
+    return `https://lh3.googleusercontent.com/d/${fileId}`;
   } else if (type === 'video') {
     return `https://drive.google.com/file/d/${fileId}/preview`;
   }
@@ -25,39 +26,100 @@ const convertDriveLink = (url: string, type: 'image' | 'video'): string => {
   return url;
 };
 
-// Project data with placeholder Google Drive links and open-source video sources
-const PROJECT_DATA = {
+type SlideData = 
+  | { type: 'image'; urls: string[] }
+  | { type: 'video'; url: string };
+
+type ProjectDataMap = {
+  [key: string]: {
+    slides: SlideData[];
+  };
+};
+
+
+const PROJECT_DATA: ProjectDataMap = {
   'Gambar Manual dan Digital': {
     slides: [
-      { type: 'image', urls: ['https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500', 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=500'] },
-      { type: 'image', urls: ['https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500', 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=500'] },
-      { type: 'video', url: 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4' },
-      { type: 'video', url: 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4' },
+      // Slide 1 (2 Gambar)
+      { 
+        type: 'image', 
+        urls: [
+          '/images/gambar/Gambar1.jpg', 
+          '/images/gambar/Gambar2.jpg'
+        ] 
+      },
+      // Slide 2 (2 Gambar)
+      { 
+        type: 'image', 
+        urls: [
+          '/images/gambar/Gambar 3.webp', 
+          '/images/gambar/Gambar 4.webp'
+        ] 
+      },
+      // Slide 3 (1 Video)
+      { 
+        type: 'video', 
+        url: '/images/gambar/Slide3.mp4' 
+      },
+      // Slide 4 (1 Video)
+      { 
+        type: 'video', 
+        url: '/images/gambar/Slide4AnimasiBola.mp4' 
+      },
     ]
   },
   'Game Development': {
     slides: [
-      { type: 'image', urls: ['https://images.unsplash.com/photo-1538481143235-5d630e50bd15?w=500'] },
-      { type: 'video', url: 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4' },
+      { 
+        type: 'image', 
+        urls: ['/images/game/Foto Gemastik GameCompress.png'] 
+      },
+      { 
+        type: 'video', 
+        url: '/images/game/Video Game.mp4' 
+      },
     ]
   },
   'Robotics': {
     slides: [
-      { type: 'video', url: 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4' },
-      { type: 'image', urls: ['https://images.unsplash.com/photo-1561070791-2526d30994b5?w=300', 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=300', 'https://images.unsplash.com/photo-1538481143235-5d630e50bd15?w=300', 'https://images.unsplash.com/photo-1516321318423-f06f70674b6e?w=300'] },
+      { 
+        type: 'video', 
+        url: '/images/robotic/RoboticVideo.mp4' 
+      },
+      { 
+        type: 'image', 
+        urls: [
+          '/images/robotic/Robotic1.png', 
+          '/images/robotic/Robotic2.png', 
+          '/images/robotic/Robotic3.png', 
+          '/images/robotic/Robotic4.png'
+        ] 
+      },
     ]
   },
   'Video Editing': {
     slides: [
-      { type: 'video', url: 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4' },
-      { type: 'video', url: 'https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4' },
+      { 
+        type: 'video', 
+        url: '/images/videoanimasi/Slide123.mp4' 
+      },
+      { 
+        type: 'video', 
+        url: '/images/videoanimasi/Slide2.mp4' 
+      },
     ]
   },
 };
-
 // Modal Component
 function ProjectModal({ isOpen, projectTitle, onClose }: { isOpen: boolean; projectTitle: string; onClose: () => void }) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // Efek ini akan mereset slide ke 0 setiap kali modal dibuka atau ganti folder
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentSlide(0);
+    }
+  }, [isOpen, projectTitle]);
   
   if (!isOpen || !projectTitle) return null;
   
@@ -110,20 +172,23 @@ function ProjectModal({ isOpen, projectTitle, onClose }: { isOpen: boolean; proj
                 {currentSlideData.urls.map((imageUrl, idx) => (
                   <img
                     key={idx}
-                    src={imageUrl}
+                    // DISINI KITA PANGGIL FUNGSINYA
+                    src={convertDriveLink(imageUrl, 'image')} 
                     alt={`Slide ${currentSlide + 1} - Image ${idx + 1}`}
                     className="w-full h-64 object-cover rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
                   />
                 ))}
               </div>
             ) : (
-              // Video
-              <video
-                src={currentSlideData.url}
-                controls
-                poster="https://images.unsplash.com/photo-1371385897020-0acc88d59be2?w=500"
-                className="w-full max-h-80 rounded-2xl shadow-lg"
-              />
+            // Video menggunakan tag HTML5 untuk file MP4 lokal
+            <video
+              src={convertDriveLink(currentSlideData.url, 'video')}
+              controls
+              autoPlay
+              muted
+              onLoadedMetadata={(e) => { e.currentTarget.volume = 0.2; }}
+              className="w-full max-h-80 rounded-2xl shadow-lg"
+            />
             )}
           </div>
           
@@ -275,6 +340,7 @@ export default function ProjectsSection() {
       
       {/* Modal */}
       <ProjectModal 
+        key={selectedProject} // <--- TAMBAHKAN BARIS AJAIB INI
         isOpen={modalOpen} 
         projectTitle={selectedProject || ''} 
         onClose={handleCloseModal}

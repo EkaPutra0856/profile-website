@@ -36,7 +36,8 @@ export default function FooterSection() {
           >
             <Mail size={32} className="text-white mb-4 group-hover:scale-110 transition-transform" />
             <h4 className="text-xl font-bold text-white mb-2">Email</h4>
-            <p className="text-white/80">eka@example.com</p>
+            <p className="text-white/80">ekaputrameravigliosi
+            @alazharpekalongan.sch.id</p>
           </a>
 
           <a
@@ -45,7 +46,7 @@ export default function FooterSection() {
           >
             <Phone size={32} className="text-white mb-4 group-hover:scale-110 transition-transform" />
             <h4 className="text-xl font-bold text-white mb-2">Telepon</h4>
-            <p className="text-white/80">+62 812 3456 789</p>
+            <p className="text-white/80">+62 857569129615</p>
           </a>
 
           <a
@@ -64,7 +65,7 @@ export default function FooterSection() {
             © 2026 Mr. Eka. Let&apos;s code and play! 🚀
           </p>
           <p className="text-white/70 text-sm">
-            Dibuat dengan ❤️ untuk para pelajar yang penuh semangat
+            tetap semangat dan pantang menyerah
           </p>
         </div>
       </div>
