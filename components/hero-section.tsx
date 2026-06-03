@@ -28,7 +28,7 @@ export default function HeroSection() {
             </div>
 
             <p className="text-xl md:text-2xl text-foreground/80 leading-relaxed max-w-lg">
-              Guru Informatika & Mahasiswa yang hobi membuat karya digital seru. Mari belajar coding dan berkarya bersama!
+              Guru Informatika yang hobi membuat karya digital seru. Mari belajar coding dan berkarya bersama!
             </p>
 
             <button

@@ -28,7 +28,7 @@ export default function AboutSection() {
         {/* Description */}
         <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 mb-16 animate-fade-up border-2 border-secondary/20">
           <p className="text-xl text-foreground/80 leading-relaxed">
-            Saya adalah seorang mahasiswa dari Universitas Sebelas Maret (UNS) yang passionate tentang teknologi dan inovasi digital. Sejak awal, saya tertarik dengan berbagai aspek kreativitas digital, mulai dari membuat game, ilustrasi, animasi, hingga konten video. Saya percaya bahwa teknologi adalah alat yang powerful untuk mengekspresikan kreativitas dan memberikan dampak positif kepada komunitas, khususnya kepada para pelajar yang ingin belajar coding dan digital creation.
+            Saya adalah seorang lulusan sarjana komputer dari Universitas Sebelas Maret (UNS) yang passionate tentang teknologi dan inovasi digital. Sejak awal, saya tertarik dengan berbagai aspek kreativitas digital, mulai dari membuat game, ilustrasi, animasi, hingga konten video. Saya percaya bahwa teknologi adalah alat yang powerful untuk mengekspresikan kreativitas dan memberikan dampak positif kepada komunitas, khususnya kepada para pelajar yang ingin belajar coding dan digital creation.
           </p>
         </div>
 
