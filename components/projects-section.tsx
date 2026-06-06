@@ -70,10 +70,17 @@ const PROJECT_DATA: ProjectDataMap = {
   },
   'Game Development': {
     slides: [
+      // Slide 1 Baru: Video Intro/Utama
+      { 
+        type: 'video', 
+        url: '/images/game/GameS.mp4' 
+      },
+      // Slide 2: Gambar
       { 
         type: 'image', 
         urls: ['/images/game/Foto Gemastik GameCompress.png'] 
       },
+      // Slide 3: Video
       { 
         type: 'video', 
         url: '/images/game/GameVidConv.mp4' 
